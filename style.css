@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── Reset & Base ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  background: #f5f0e8;
+  color: #2c2c2c;
+  min-height: 100vh;
+}
+
+/* ── Navigation ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: #f5f0e8;
+  border-bottom: 1.5px solid #d4cdc0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 999;
+}
+
+.nav-logo {
+  font-family: 'Special Elite', serif;
+  font-size: 1.1rem;
+  color: #2c2c2c;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.82rem;
+  color: #777;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: #2c2c2c;
+  transition: width 0.25s;
+}
+
+.nav-links a:hover { color: #2c2c2c; }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: #2c2c2c; }
+.nav-links a.active::after { width: 100%; }
+
+/* ── Page wrapper ── */
+.page-wrapper {
+  padding-top: 52px;
+  min-height: 100vh;
+}
+
+/* ── Ruled paper lines utility ── */
+.ruled {
+  background-image: repeating-linear-gradient(
+    transparent, transparent 27px,
+    #e0d9ce 27px, #e0d9ce 28.5px
+  );
+  background-attachment: local;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  padding: 10px 26px;
+  border: 1.5px solid #2c2c2c;
+  background: transparent;
+  color: #2c2c2c;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn:hover {
+  background: #2c2c2c;
+  color: #f5f0e8;
+}
+
+.btn-fill {
+  background: #2c2c2c;
+  color: #f5f0e8;
+}
+
+.btn-fill:hover {
+  background: transparent;
+  color: #2c2c2c;
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 32px;
+  font-size: 0.72rem;
+  color: #aaa;
+  letter-spacing: 0.06em;
+  border-top: 1px solid #e0d9ce;
+  margin-top: 80px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  nav { padding: 0 20px; }
+  .nav-links { gap: 20px; }
+}
