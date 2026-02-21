@@ -6,7 +6,6 @@
   <title>Blogs · Typewriter Tales</title>
   <link rel="stylesheet" href="style.css"/>
   <style>
-
     .blogs-header {
       max-width: 700px;
       margin: 0 auto;
@@ -26,7 +25,6 @@
       letter-spacing: 0.04em;
     }
 
-    /* ── Post list ── */
     .post-list {
       max-width: 700px;
       margin: 0 auto;
@@ -80,32 +78,43 @@
       color: #2c2c2c;
       border-color: #2c2c2c;
     }
-
-    /* ── Empty state ── */
-    .empty-state {
-      text-align: center;
-      padding: 80px 24px;
-      color: #bbb;
-    }
-
-    .empty-state .big-text {
-      font-family: 'Special Elite', serif;
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-      color: #ccc;
-    }
-
-    .empty-state p {
-      font-size: 0.82rem;
-      margin-bottom: 28px;
-    }
-
   </style>
 </head>
 <body>
 
-<!-- Nav -->
 <nav>
   <a href="index.html" class="nav-logo">Typewriter Tales</a>
   <ul class="nav-links">
-    <li><a href
+    <li><a href="index.html">home</a></li>
+    <li><a href="blogs.html" class="active">blogs</a></li>
+    <li><a href="typewriter.html">experience</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <div class="blogs-header">
+    <h1>The Blog</h1>
+    <p>short stories · personal experiences · little moments worth remembering</p>
+  </div>
+
+  <div class="post-list">
+
+    <!-- Post 1 — duplicate this block every time you write a new post -->
+    <a href="post1.html" class="post-item">
+      <p class="post-meta">21 Feb 2026 · 2 min read</p>
+      <h2 class="post-title">The First Page</h2>
+      <p class="post-preview">Every typewriter has a first keystroke. Every journal has a first page. This is mine — a little awkward, a little unsure, but here nonetheless...</p>
+      <span class="post-read-more">read more →</span>
+    </a>
+
+    <!-- Add more posts here as you write them -->
+
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 · Typewriter Tales · made with patience and coffee
+</footer>
+
+</body>
+</html>
