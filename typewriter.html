@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Experience the Typewriter · Typewriter Tales</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    .tw-page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 24px 100px;
+    }
+
+    /* header */
+    .tw-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .tw-header h1 {
+      font-family: 'Special Elite', serif;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .tw-header p {
+      font-size: 0.82rem;
+      color: #999;
+      letter-spacing: 0.04em;
+    }
+
+    /* ribbon color picker */
+    .ribbon-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      font-size: 0.75rem;
+      color: #aaa;
+      letter-spacing: 0.08em;
+    }
+
+    .color-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .color-dot:hover { transform: scale(1.2); }
+    .color-dot.active { border-color: #555; }
+
+    /* the paper */
+    .paper {
+      background: #fdfaf3;
+      border: 1px solid #e0d9ce;
+      box-shadow: 3px 3px 0 #e0d9ce;
+      padding: 52px 56px 52px 80px;
+      min-height: 480px;
+      position: relative;
+      cursor: text;
+
+      background-image:
+        linear-gradient(#fdfaf3 0px, #fdfaf3 27px, #e0d9ce 27px, #e0d9ce 28px);
+      background-size: 100% 28px;
+    }
+
+    /* red margin line */
+    .paper::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 56px;
+      width: 1px;
+      background: #f0b0a8;
+      opacity: 0.7;
+    }
+
+    /* visible typed text */
+    #typed-display {
+      font-family: 'Courier Prime', monospace;
+      font-size: 1rem;
+      line-height: 28px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #2c2c2c;
+      min-height: 28px;
+      outline: none;
+    }
+
+    .tw-cursor-live {
+      display: inline-block;
+      width: 9px;
+      height: 1em;
+      background: currentColor;
+      vertical-align: text-bottom;
+      margin-left: 1px;
+      animation: blink 0.75s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
+    /* hidden real input catcher */
+    #ghost {
+      position: fixed;
+      opacity: 0;
+      pointer-events: none;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    /* hint below paper */
+    .paper-hint {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.72rem;
+      color: #ccc;
+      letter-spacing: 0.06em;
+    }
+
+    /* action bar */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 
