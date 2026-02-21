@@ -13,10 +13,9 @@
       padding: 56px 24px 100px;
     }
 
-    /* header */
     .tw-header {
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 36px;
     }
 
     .tw-header h1 {
@@ -31,13 +30,13 @@
       letter-spacing: 0.04em;
     }
 
-    /* ribbon color picker */
+    /* ribbon colour picker */
     .ribbon-bar {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       font-size: 0.75rem;
       color: #aaa;
       letter-spacing: 0.08em;
@@ -48,10 +47,9 @@
       border-radius: 50%;
       cursor: pointer;
       border: 2px solid transparent;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.2s, transform 0.15s;
     }
-
-    .color-dot:hover { transform: scale(1.2); }
+    .color-dot:hover  { transform: scale(1.25); }
     .color-dot.active { border-color: #555; }
 
     /* the paper */
@@ -59,13 +57,14 @@
       background: #fdfaf3;
       border: 1px solid #e0d9ce;
       box-shadow: 3px 3px 0 #e0d9ce;
-      padding: 52px 56px 52px 80px;
-      min-height: 480px;
+      padding: 48px 56px 48px 80px;
+      min-height: 460px;
       position: relative;
       cursor: text;
-
-      background-image:
-        linear-gradient(#fdfaf3 0px, #fdfaf3 27px, #e0d9ce 27px, #e0d9ce 28px);
+      background-image: linear-gradient(
+        #fdfaf3 0px, #fdfaf3 27px,
+        #e0d9ce 27px, #e0d9ce 28px
+      );
       background-size: 100% 28px;
     }
 
@@ -73,14 +72,13 @@
     .paper::before {
       content: '';
       position: absolute;
-      top: 0; bottom: 0;
-      left: 56px;
+      top: 0; bottom: 0; left: 56px;
       width: 1px;
       background: #f0b0a8;
       opacity: 0.7;
     }
 
-    /* visible typed text */
+    /* visible typed output */
     #typed-display {
       font-family: 'Courier Prime', monospace;
       font-size: 1rem;
@@ -90,12 +88,14 @@
       color: #2c2c2c;
       min-height: 28px;
       outline: none;
+      position: relative;
+      z-index: 1;
     }
 
+    /* blinking cursor */
     .tw-cursor-live {
       display: inline-block;
-      width: 9px;
-      height: 1em;
+      width: 9px; height: 1em;
       background: currentColor;
       vertical-align: text-bottom;
       margin-left: 1px;
@@ -107,28 +107,308 @@
       50%      { opacity: 0; }
     }
 
-    /* hidden real input catcher */
-    #ghost {
-      position: fixed;
-      opacity: 0;
-      pointer-events: none;
-      top: -9999px;
-      left: -9999px;
+    /* tiny clack shake on each keystroke */
+    @keyframes clack {
+      0%   { transform: translateX(0); }
+      30%  { transform: translateX(-1px); }
+      70%  { transform: translateX(1px); }
+      100% { transform: translateX(0); }
     }
+    .clack { animation: clack 0.07s ease; }
 
     /* hint below paper */
     .paper-hint {
       text-align: center;
-      margin-top: 14px;
+      margin-top: 12px;
       font-size: 0.72rem;
       color: #ccc;
       letter-spacing: 0.06em;
     }
 
-    /* action bar */
+    /* action buttons */
     .action-bar {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      margin-top: 
+      gap: 14px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    /* character counter */
+    .char-count {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.72rem;
+      color: #ccc;
+      letter-spacing: 0.06em;
+    }
+
+    /* sound toggle */
+    .sound-btn {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: #f0ebe0;
+      border: 1px solid #d4cdc0;
+      border-radius: 50%;
+      width: 42px; height: 42px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      z-index: 200;
+      transition: background 0.2s;
+    }
+    .sound-btn:hover { background: #e5e0d5; }
+
+    /* hidden ghost input */
+    #ghost {
+      position: fixed;
+      opacity: 0;
+      pointer-events: none;
+      top: -9999px; left: -9999px;
+    }
+
+    @media (max-width: 600px) {
+      .paper { padding: 36px 20px 36px 52px; }
+      .paper::before { left: 36px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a href="index.html" class="nav-logo">Typewriter Tales</a>
+  <ul class="nav-links">
+    <li><a href="index.html">home</a></li>
+    <li><a href="blogs.html">blogs</a></li>
+    <li><a href="typewriter.html" class="active">experience</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <div class="tw-page">
+
+    <!-- Header -->
+    <div class="tw-header">
+      <h1>Experience the Typewriter</h1>
+      <p>click the paper · start typing · feel every keystroke</p>
+    </div>
+
+    <!-- Ribbon colour picker -->
+    <div class="ribbon-bar">
+      <span>ribbon colour →</span>
+      <div class="color-dot active" data-color="#2c2c2c" style="background:#2c2c2c" title="black ink"></div>
+      <div class="color-dot" data-color="#b22222" style="background:#b22222" title="red ink"></div>
+      <div class="color-dot" data-color="#1a3a6b" style="background:#1a3a6b" title="navy ink"></div>
+      <div class="color-dot" data-color="#2d6a4f" style="background:#2d6a4f" title="green ink"></div>
+      <div class="color-dot" data-color="#6b3fa0" style="background:#6b3fa0" title="purple ink"></div>
+    </div>
+
+    <!-- The paper -->
+    <div class="paper" id="paper">
+      <div id="typed-display"><span class="tw-cursor-live" id="tw-cursor"></span></div>
+    </div>
+
+    <p class="paper-hint">click anywhere on the paper to start · backspace to correct · enter for new line</p>
+    <p class="char-count"><span id="char-count">0</span> characters typed</p>
+
+    <!-- Action buttons -->
+    <div class="action-bar">
+      <button class="btn" id="clear-btn">clear page</button>
+      <button class="btn btn-fill" id="copy-btn">copy text</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 · Typewriter Tales · made with patience and coffee
+</footer>
+
+<!-- Sound toggle -->
+<button class="sound-btn" id="sound-btn" title="toggle typewriter sound">🔇</button>
+
+<!-- Hidden textarea to catch keyboard input -->
+<textarea id="ghost" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+
+<script>
+
+  // ── State ──
+  let text = '';
+  let inkColor = '#2c2c2c';
+  let soundOn  = false;
+
+  const display   = document.getElementById('typed-display');
+  const cursor    = document.getElementById('tw-cursor');
+  const ghost     = document.getElementById('ghost');
+  const paper     = document.getElementById('paper');
+  const charCount = document.getElementById('char-count');
+  const soundBtn  = document.getElementById('sound-btn');
+  const clearBtn  = document.getElementById('clear-btn');
+  const copyBtn   = document.getElementById('copy-btn');
+
+  // ── Focus ghost input whenever paper is clicked ──
+  paper.addEventListener('click', () => ghost.focus());
+  window.addEventListener('click', () => ghost.focus());
+
+  // ── Audio context for typewriter click sound ──
+  let audioCtx = null;
+
+  function getAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function playClack() {
+    if (!soundOn) return;
+    try {
+      const ctx = getAudio();
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.04, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < data.length; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.008));
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      const gain = ctx.createGain();
+      gain.gain.value = 0.18;
+      src.connect(gain);
+      gain.connect(ctx.destination);
+      src.start();
+    } catch(e) {}
+  }
+
+  function playReturn() {
+    if (!soundOn) return;
+    try {
+      const ctx = getAudio();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(420, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch(e) {}
+  }
+
+  // ── Render text to display ──
+  function render() {
+    // clear everything except cursor
+    while (display.firstChild !== cursor) {
+      display.removeChild(display.firstChild);
+    }
+    // insert text before cursor
+    if (text.length > 0) {
+      cursor.insertAdjacentText('beforebegin', text);
+    }
+    // update colour
+    display.style.color = inkColor;
+    cursor.style.background = inkColor;
+    // update counter
+    charCount.textContent = text.length;
+  }
+
+  // ── Clack shake on display ──
+  function shakeDisplay() {
+    display.classList.remove('clack');
+    void display.offsetWidth; // reflow
+    display.classList.add('clack');
+  }
+
+  // ── Handle keyboard input ──
+  ghost.addEventListener('keydown', (e) => {
+
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      if (text.length > 0) {
+        text = text.slice(0, -1);
+        playClack();
+        shakeDisplay();
+        render();
+      }
+      return;
+    }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      text += '\n';
+      playReturn();
+      shakeDisplay();
+      render();
+      return;
+    }
+
+    // ignore modifier-only keys
+    if (e.key.length === 1) {
+      text += e.key;
+      playClack();
+      shakeDisplay();
+      render();
+    }
+  });
+
+  // keep ghost focused
+  ghost.addEventListener('blur', () => {
+    setTimeout(() => ghost.focus(), 50);
+  });
+
+  // ── Ribbon colour picker ──
+  document.querySelectorAll('.color-dot').forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      inkColor = dot.dataset.color;
+      render();
+      ghost.focus();
+    });
+  });
+
+  // ── Sound toggle ──
+  soundBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    soundOn = !soundOn;
+    soundBtn.textContent = soundOn ? '🔊' : '🔇';
+    if (soundOn) getAudio(); // unlock audio context on user gesture
+    ghost.focus();
+  });
+
+  // ── Clear button ──
+  clearBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (text.length === 0) return;
+    if (confirm('Clear the page? This cannot be undone.')) {
+      text = '';
+      render();
+    }
+    ghost.focus();
+  });
+
+  // ── Copy button ──
+  copyBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (text.length === 0) return;
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = 'copied!';
+      setTimeout(() => copyBtn.textContent = 'copy text', 2000);
+    });
+    ghost.focus();
+  });
+
+  // ── Initial focus ──
+  window.addEventListener('load', () => {
+    ghost.focus();
+    render();
+  });
+
+</script>
+</body>
+</html>
