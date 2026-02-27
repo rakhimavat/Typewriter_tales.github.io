@@ -44,7 +44,9 @@
     .wall-card::before {
       content: '';
       position: absolute;
-      top: 0; bottom: 0; left: 40px;
+      top: 0;
+      bottom: 0;
+      left: 40px;
       width: 1px;
       background: #f0b0a8;
       opacity: 0.6;
@@ -98,86 +100,85 @@
       <h1>The Wall</h1>
       <p>words left behind by people who stopped here for a moment</p>
     </div>
+
     <div class="wall-grid" id="wall-grid">
       <p class="state-msg" id="state-msg">loading the wall...</p>
     </div>
+
     <div class="write-cta">
-      <a href="typewriter.html" class="btn">write something →</a>
+      <a href="typewriter.html">write something →</a>
     </div>
   </div>
 </div>
 
-<footer>
-  &copy; 2026 · Typewriter Tales · made with patience and coffee
-</footer>
+<footer>© 2026 · Typewriter Tales · made with patience and coffee</footer>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, orderBy, query, limit }
-    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, getDocs, orderBy, query, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBPnZ8f4cek3JcIwfopsmxnCAGTXoH--yc",
-    authDomain: "typewritertales-5bdda.firebaseapp.com",
-    projectId: "typewritertales-5bdda",
-    storageBucket: "typewritertales-5bdda.firebasestorage.app",
-    messagingSenderId: "631041179526",
-    appId: "1:631041179526:web:7d2fea0e3a5b48ce567607"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBPnZ8f4cek3JcIwfopsmxnCAGTXoH--yc",
+  authDomain: "typewritertales-5bdda.firebaseapp.com",
+  projectId: "typewritertales-5bdda",
+  storageBucket: "typewritertales-5bdda.firebasestorage.app",
+  messagingSenderId: "631041179526",
+  appId: "1:631041179526:web:7d2fea0e3a5b48ce567607"
+};
 
-  const app  = initializeApp(firebaseConfig);
-  const db   = getFirestore(app);
-  const grid = document.getElementById('wall-grid');
-  const msg  = document.getElementById('state-msg');
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  function formatDate(ts) {
-    if (!ts) return '';
-    const d = ts.toDate();
-    return d.toLocaleDateString('en-IN', {
-      day: 'numeric', month: 'short', year: 'numeric'
-    });
-  }
+const grid = document.getElementById('wall-grid');
+const msg  = document.getElementById('state-msg');
 
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate();
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
 
-  async function loadWall() {
-    try {
-      const q = query(
-        collection(db, 'submissions'),
-        orderBy('createdAt', 'desc'),
-        limit(50)
-      );
-      const snap = await getDocs(q);
-      if (snap.empty) {
-        msg.textContent = 'nothing here yet. be the first to write something.';
-        return;
-      }
-      msg.remove();
-      snap.forEach(doc => {
-        const d = doc.data();
-        const card = document.createElement('div');
-        card.className = 'wall-card';
-        card.innerHTML = `
-          <p class="card-text" style="color:${d.inkColor || '#2c2c2c'}">${escapeHtml(d.text)}</p>
-          <div class="card-meta">
-            <span>${escapeHtml(d.author || 'anonymous')}</span>
-            <span>${formatDate(d.createdAt)}</span>
-          </div>`;
-        grid.appendChild(card);
-      });
-    } catch(e) {
-      msg.textContent = 'could not load the wall. try again later.';
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+async function loadWall() {
+  try {
+    const q = query(
+      collection(db, 'submissions'),
+      orderBy('createdAt', 'desc'),
+      limit(50)
+    );
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      msg.textContent = 'nothing here yet. be the first to write something.';
+      return;
     }
+    msg.remove();
+    snap.forEach(doc => {
+      const d = doc.data();
+      const card = document.createElement('div');
+      card.className = 'wall-card';
+      card.innerHTML = `
+        <p class="card-text" style="color:${d.inkColor || '#2c2c2c'}">${escapeHtml(d.text)}</p>
+        <div class="card-meta">
+          <span>${escapeHtml(d.author || 'anonymous')}</span>
+          <span>${formatDate(d.createdAt)}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  } catch(e) {
+    msg.textContent = 'could not load the wall. try again later.';
   }
+}
 
-  loadWall();
+loadWall();
 </script>
+
 </body>
 </html>
-
